@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <script th:src="@{/js/global.js}"></script>
+  <link rel="stylesheet" th:href="@{/css/global.css}"/>
+  <link rel="stylesheet" th:href="@{/css/login.css}"/>
+  <title>牛客网-忘记密码</title>
+</head>
+<body>
+<div class="nk-container">
+  <!-- 头部 -->
+  <header class="bg-dark sticky-top" th:replace="index::header"/>
+  <!-- 内容 -->
+  <div class="main">
+    <div class="container pl-5 pr-5 pt-3 pb-3 mt-3 mb-3">
+      <form class="mt-5" method="post" th:action="@{/user/forgetPassword}">
+        <div class="form-group row">
+          <label for="email" class="col-sm-2 col-form-label text-right">邮箱:</label>
+          <div class="col-sm-10">
+            <input type="email"
+                   th:class="|form-control ${emailMsg!=null?'is-invalid':''}|"
+                   th:value="${param.email}"
+                   id="email" name="email" placeholder="请输入您的邮箱!" required>
+            <div class="invalid-feedback" th:text="${emailMsg}">
+              该邮箱未注册!
+            </div>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="verifycode" class="col-sm-2 col-form-label text-right">验证码:</label>
+          <div class="col-sm-6">
+            <input type="text" th:class="|form-control ${codeMsg!=null?'is-invalid':''}|"
+                   id="verifycode" name="code" placeholder="请输入验证码!">
+            <div class="invalid-feedback" th:text="${codeMsg}">
+              验证码不正确!
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <img th:src="@{/kaptcha}" id="kaptcha" style="width:100px;height:40px;" class="mr-2"/>
+            <a href="javascript:refresh_kaptcha();" class="font-size-12 align-bottom">刷新验证码</a>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <label for="password" class="col-sm-2 col-form-label text-right">密码:</label>
+          <div class="col-sm-10">
+            <input type="password"
+                   th:class="|form-control ${newPasswordMsg!=null?'is-invalid':''}|"
+                   th:value="${param.newPassword}"
+                   id="password" name="newPassword" placeholder="请输入您的密码!" required>
+            <div class="invalid-feedback" th:text="${newPasswordMsg}">
+              密码长度不能小于8位!
+            </div>
+          </div>
+        </div>
+        <div class="form-group row mt-4">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-10 text-center">
+            <button type="submit" class="btn btn-info text-white form-control">重置密码</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function refresh_kaptcha() {
+    var path = CONTEXT_PATH + "/kaptcha?p=" + Math.random();
+    $("#kaptcha").attr("src", path);
+  }
+</script>
+</body>
+</html>
