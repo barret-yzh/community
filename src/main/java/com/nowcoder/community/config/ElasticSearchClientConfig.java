@@ -17,8 +17,11 @@ public class ElasticSearchClientConfig {
     public RestHighLevelClient restHighLevelClient() {
         RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(
-                        //绑定主机，端口，协议，如果是ES集群，就配置多个
-                        new HttpHost("192.168.137.100", 9200, "http")));
+                        // 绑定主机，端口，协议，如果是ES集群，就配置多个
+                        new HttpHost("192.168.137.100", 9200, "http"),
+                        new HttpHost("192.168.137.101", 9200, "http"),
+                        new HttpHost("192.168.137.102", 9200, "http")
+                ));
         return client;
     }
 }

@@ -34,7 +34,7 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
 
     static {
         try {
-            epoch = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2014-08-01 00:00:00");
+            epoch = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2024-10-01 00:00:00");
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -42,8 +42,8 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        String redisKey = RedisKeyUtil.getPostScoreKey();
-        BoundSetOperations operations = redisTemplate.boundSetOps(redisKey);
+        String postScoreKey = RedisKeyUtil.getPostScoreKey();
+        BoundSetOperations operations = redisTemplate.boundSetOps(postScoreKey);
         if (operations.size() == 0) {
             logger.info("[任务取消] 没有需要刷新的帖子!");
             return;
@@ -55,7 +55,7 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
         logger.info("[任务结束] 帖子分数刷新完毕!");
     }
 
-    private void refresh(int postId) {
+    public void refresh(int postId) {
         DiscussPost post = discussPostService.findDiscussPostById(postId);
         if (post == null) {
             logger.error("该帖子不存在: id = " + postId);

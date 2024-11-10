@@ -38,7 +38,7 @@ public class ElasticsearchService {
     }
 
     public List<Object> searchDiscussPost(String keyword, int current, int limit) throws IOException {
-        SearchRequest searchRequest = new SearchRequest("discusspost");//discusspost是索引名，就是表名
+        SearchRequest searchRequest = new SearchRequest("discusspost");//discusspost是索引名
         //高亮
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         highlightBuilder.field("title");
