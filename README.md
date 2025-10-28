@@ -53,10 +53,6 @@
 | ElasticSearch | 7.8.0  |
 | caffeine      | 2.7.0  |
 
-## 系统架构图
-
-![](https://github.com/barret-yzh/community_Img/blob/main/15_architecture.png?raw=true)
-
 ## 运行项目需要修改的
 
 - 配置MySQL
